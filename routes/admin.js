@@ -6,6 +6,6 @@ const productController = require("../controller/product");
 /* GET home page. */
 router.get("/add-product", productController.getAddProduct);
 
-router.get("/add-product", productController.postAddProduct);
+router.post("/add-product", productController.postAddProduct);
 
 module.exports = router;
