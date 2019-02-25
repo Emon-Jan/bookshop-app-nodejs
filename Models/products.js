@@ -1,16 +1,41 @@
-const products = [];
+const mongoose = require("mongoose");
 
-module.exports = class Product {
-	constructor(t) {
-		this.title = t;
-	}
+const Schema = mongoose.Schema;
 
-	save() {
-		products.push(this);
-	}
+const productSchema = new Schema({
+	title: {
+		type: String,
+		required: true,
+	},
+	price: {
+		type: String,
+		required: true,
+	},
+	discription: {
+		type: String,
+		required: true,
+	},
+	imageUrl: {
+		type: String,
+		required: true,
+	},
+});
 
-	fetchAll() {
-		// needs to be static
-		return products;
-	}
-};
+module.exports = mongoose.model("Product", productSchema);
+
+// const products = [];
+
+// module.exports = class Product {
+// 	constructor(t) {
+// 		this.title = t;
+// 	}
+
+// 	save() {
+// 		products.push(this);
+// 	}
+
+// 	fetchAll() {
+// 		// needs to be static
+// 		return products;
+// 	}
+// };
