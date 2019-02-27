@@ -11,7 +11,7 @@ const productSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	discription: {
+	description: {
 		type: String,
 		required: true,
 	},
@@ -22,20 +22,3 @@ const productSchema = new Schema({
 });
 
 module.exports = mongoose.model("Product", productSchema);
-
-// const products = [];
-
-// module.exports = class Product {
-// 	constructor(t) {
-// 		this.title = t;
-// 	}
-
-// 	save() {
-// 		products.push(this);
-// 	}
-
-// 	fetchAll() {
-// 		// needs to be static
-// 		return products;
-// 	}
-// };
