@@ -6,11 +6,35 @@ const bodyParser = require("body-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
 
+const User = require("./Models/user");
+
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 // const passportSetup = require("./config/passport-setup");
 
 const errorController = require("./controller/error");
+
+mongoose
+	.connect("mongodb://localhost:27017/shop", { useNewUrlParser: true })
+	.then(result => {
+		console.log("Connected to db.");
+		User.findOne().then(user => {
+			if (!user) {
+				const user = new User({
+					name: "Emon",
+					email: "muktadirimam@gmail.com",
+					cart: {
+						items: [],
+					},
+				});
+				user.save();
+			}
+		});
+	})
+	.catch(err => {
+		console.log(err);
+		process.exit(1);
+	});
 
 const app = express();
 
@@ -25,20 +49,21 @@ app.use(express.urlencoded({ extended: false }));
 // app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use((req, res, next) => {
+	User.findById("5c76f4d4d894923d59a7dc15")
+		.then(user => {
+			req.user = user;
+			next();
+		})
+		.catch(err => {
+			console.log(err);
+		});
+});
+
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
 
 // catch 404 and forward to error handler
 app.use(errorController.get404);
-
-mongoose
-    .connect("mongodb://localhost:27017/shop", { useNewUrlParser: true })
-    .then(result => {
-        console.log("Connected to db.");
-    })
-    .catch(err => {
-        console.log(err);
-        process.exit(1);
-    });
 
 module.exports = app;
