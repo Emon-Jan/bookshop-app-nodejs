@@ -14,16 +14,6 @@ const errorController = require("./controller/error");
 
 const app = express();
 
-mongoose
-	.connect("mongodb://localhost:27017/shop", { useNewUrlParser: true })
-	.then(result => {
-		console.log(result);
-	})
-	.catch(err => {
-		console.log(err);
-		process.exit(1);
-	});
-
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
@@ -41,7 +31,14 @@ app.use(shopRoutes);
 // catch 404 and forward to error handler
 app.use(errorController.get404);
 
-// error handler
-app.use(errorController.get500);
+mongoose
+    .connect("mongodb://localhost:27017/shop", { useNewUrlParser: true })
+    .then(result => {
+        console.log("Connected to db.");
+    })
+    .catch(err => {
+        console.log(err);
+        process.exit(1);
+    });
 
 module.exports = app;
