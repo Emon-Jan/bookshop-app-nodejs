@@ -10,7 +10,7 @@ const User = require("./Models/user");
 
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
-// const passportSetup = require("./config/passport-setup");
+const authRoutes = require("./routes/auth");
 
 const errorController = require("./controller/error");
 
@@ -62,6 +62,7 @@ app.use((req, res, next) => {
 
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
+app.use(authRoutes);
 
 // catch 404 and forward to error handler
 app.use(errorController.get404);
