@@ -1,17 +1,20 @@
-// const createError = require("http-errors");
+// Core 
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
-// const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
+const session = require("express-session");
 
+// Models
 const User = require("./Models/user");
 
+// Routes 
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/shop");
 const authRoutes = require("./routes/auth");
 
+// Error
 const errorController = require("./controller/error");
 
 mongoose
@@ -46,8 +49,9 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.urlencoded({ extended: false }));
-// app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
+app.use(session({ secret: "secret", resave: false, saveUninitialized: false }));
 
 app.use((req, res, next) => {
 	User.findById("5c76f4d4d894923d59a7dc15")

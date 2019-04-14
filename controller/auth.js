@@ -1,6 +1,12 @@
-exports.getLogin = (req, res, next) => {
+exports.getLoginPage = (req, res, next) => {
     res.render("auth/login", {
         path: "login",
-        pageTitle: "Login"
+        pageTitle: "Login",
+        isAuthenticated: false,
     });
+}
+
+exports.postLogin = (req, res, next) => {
+    req.session.isAuthenticated = true;
+    res.redirect('/');
 }
