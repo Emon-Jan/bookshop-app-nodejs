@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
 const session = require("express-session");
+const StoreSession = require('connect-mongodb-session')(session);
 
 // Models
 const User = require("./Models/user");
@@ -17,8 +18,15 @@ const authRoutes = require("./routes/auth");
 // Error
 const errorController = require("./controller/error");
 
+const MONGODB_URI = "mongodb://localhost:27017/shop";
+
+const store = new StoreSession({
+	uri: MONGODB_URI,
+	collection: 'sessions'
+});
+
 mongoose
-	.connect("mongodb://localhost:27017/shop", { useNewUrlParser: true })
+	.connect(MONGODB_URI, { useNewUrlParser: true })
 	.then(result => {
 		console.log("Connected to db.");
 		User.findOne().then(user => {
@@ -51,7 +59,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use(session({ secret: "secret", resave: false, saveUninitialized: false }));
+app.use(session({ secret: "secret", resave: false, saveUninitialized: false, store: store }));
 
 app.use((req, res, next) => {
 	User.findById("5c76f4d4d894923d59a7dc15")
