@@ -31,6 +31,9 @@
 			<li class="main-header__item">
 				<a class="<%= path === '/login' ? 'active' : '' %>" href="/login">login</a>
 			</li>
+			<li class="main-header__item">
+				<a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Signup</a>
+			</li>
 			<%} else {%>
 			<li class="main-header__item">
 				<form action="/logout" method="POST">
@@ -65,11 +68,15 @@
 			<a class="<%= path === '/admin/products' ? 'active' : '' %>" href="/admin/products">Admin Products
 			</a>
 		</li>
-		<% } %>
-	</ul>
-	<ul class="main-header__item-list">
 		<li class="main-header__item">
 			<a class="<%= path === '/login' ? 'active' : '' %>" href="/login">login</a>
 		</li>
+		<%} else {%>
+		<li class="main-header__item">
+			<form action="/logout" method="POST">
+				<button type="submit">Logout</button>
+			</form>
+		</li>
+		<% } %>
 	</ul>
 </nav>
