@@ -1,6 +1,23 @@
 const Product = require("../Models/products");
 const Order = require("../Models/order");
 
+exports.getIndex = (req, res, next) => {
+	Product.find()
+		.then(products => {
+			// console.log(products);
+			res.render("shop/index", {
+				prods: products,
+				pageTitle: "Shop",
+				path: "/",
+				isAuthenticated: req.session.isAuthenticated,
+				csrfToken: req.csrfToken()
+			});
+		})
+		.catch(err => {
+			console.log(err);
+		});
+};
+
 exports.getProducts = (req, res, next) => {
 	Product.find()
 		.then(products => {
@@ -12,22 +29,6 @@ exports.getProducts = (req, res, next) => {
 				hasProducts: products.length > 0,
 				activeShop: true,
 				productCSS: true,
-				isAuthenticated: req.session.isAuthenticated,
-			});
-		})
-		.catch(err => {
-			console.log(err);
-		});
-};
-
-exports.getIndex = (req, res, next) => {
-	Product.find()
-		.then(products => {
-			// console.log(products);
-			res.render("shop/index", {
-				prods: products,
-				pageTitle: "Shop",
-				path: "/",
 				isAuthenticated: req.session.isAuthenticated,
 			});
 		})
@@ -130,7 +131,7 @@ exports.postOrder = (req, res, next) => {
 			const order = new Order({
 				products: products,
 				user: {
-					name: req.user.name,
+					email: req.user.email,
 					userId: req.user,
 				},
 			});

@@ -26,7 +26,7 @@ exports.postAddProduct = (req, res, next) => {
 	product
 		.save()
 		.then(result => {
-			console.log("data saved with this id: ", result._id);
+			// console.log("data saved with this id: ", result._id);
 			res.redirect("/");
 		})
 		.catch(err => {

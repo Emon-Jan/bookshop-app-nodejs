@@ -65,9 +65,25 @@ form {
 	color: white;
 }
 
+li.main-header_item form button{
+	background:none!important;
+	color:inherit;
+	border:none; 
+	padding:0!important;
+	font: inherit;
+	cursor: pointer;
+}
+
 .main-header__item a:hover,
 .main-header__item a:active,
 .main-header__item a.active {
+	color: #ffeb3b;
+}
+
+.main-header__item button:hover,
+.main-header__item button:active,
+.main-header__item button.active {
+	cursor: pointer;
 	color: #ffeb3b;
 }
 
